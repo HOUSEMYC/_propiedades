@@ -6,14 +6,14 @@
   <title>HOUSEMYCPROPIEDADES — Portal Inmobiliario</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen">
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
   <!-- Encabezado -->
-  <header class="bg-slate-950 text-white border-b border-slate-800">
+  <header class="bg-zinc-950 border-b border-amber-500/30">
     <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-amber-400">HOUSEMYCPROPIEDADES</h1>
       </div>
-      <span class="text-xs text-slate-300 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full">
+      <span class="text-xs text-amber-300 bg-amber-950/40 border border-amber-500/40 px-3 py-1.5 rounded-full">
         Maqueta inicial · Gestión de imágenes por propiedad
       </span>
     </div>
@@ -21,10 +21,10 @@
 
   <!-- Controles de filtro -->
   <section class="max-w-6xl mx-auto px-4 pt-6">
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 grid grid-cols-1 md:grid-cols-4 gap-3">
+    <div class="bg-gradient-to-b from-amber-950/35 to-zinc-900 rounded-xl shadow-md shadow-amber-950/20 border border-amber-500/50 p-4 grid grid-cols-1 md:grid-cols-4 gap-3">
       <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Operación</label>
-        <select id="filterOperation" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm bg-white">
+        <label class="block text-xs font-semibold text-amber-300 mb-1">Operación</label>
+        <select id="filterOperation" class="w-full rounded-lg border border-amber-500/60 px-3 py-2 text-sm bg-zinc-950 text-amber-100 focus:outline-none focus:border-amber-400">
           <option value="all">Todas (Venta y Arriendo)</option>
           <option value="sale">Venta</option>
           <option value="rent">Arriendo</option>
@@ -32,8 +32,8 @@
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo de propiedad</label>
-        <select id="filterType" class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm bg-white">
+        <label class="block text-xs font-semibold text-amber-300 mb-1">Tipo de propiedad</label>
+        <select id="filterType" class="w-full rounded-lg border border-amber-500/60 px-3 py-2 text-sm bg-zinc-950 text-amber-100 focus:outline-none focus:border-amber-400">
           <option value="all">Todos los tipos</option>
           <option value="house">Casa</option>
           <option value="apartment">Departamento</option>
@@ -42,12 +42,12 @@
       </div>
 
       <div class="md:col-span-2">
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Buscar por título o sector</label>
+        <label class="block text-xs font-semibold text-amber-300 mb-1">Buscar por título o sector</label>
         <input
           id="filterSearch"
           type="text"
           placeholder="Ej. Temuco, Fundo El Carmen, paño, departamento..."
-          class="w-full rounded-lg border-slate-300 border px-3 py-2 text-sm"
+          class="w-full rounded-lg border border-amber-500/60 px-3 py-2 text-sm bg-zinc-950 text-amber-100 placeholder-amber-200/40 focus:outline-none focus:border-amber-400"
         />
       </div>
     </div>
@@ -56,19 +56,19 @@
   <!-- Catálogo -->
   <main class="max-w-6xl mx-auto px-4 py-6">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold text-slate-800">Propiedades disponibles</h2>
-      <span id="propertyCount" class="text-sm text-slate-500"></span>
+      <h2 class="text-lg font-semibold text-amber-400">Propiedades disponibles</h2>
+      <span id="propertyCount" class="text-sm text-amber-300/80"></span>
     </div>
 
     <div id="catalogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
 
   <!-- Modal de ficha y gestión de imágenes -->
-  <div id="detailModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
-      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 sticky top-0 bg-white z-10">
-        <h3 id="modalTitle" class="text-lg font-bold text-slate-900"></h3>
-        <button id="closeModalBtn" class="text-slate-500 hover:text-slate-800 text-xl font-bold px-2">&times;</button>
+  <div id="detailModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-zinc-950 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-amber-500/60">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-amber-500/30 sticky top-0 bg-zinc-950 z-10">
+        <h3 id="modalTitle" class="text-lg font-bold text-amber-400"></h3>
+        <button id="closeModalBtn" class="text-amber-300 hover:text-amber-100 text-xl font-bold px-2">&times;</button>
       </div>
 
       <div id="modalBody" class="p-6 space-y-6"></div>
@@ -80,11 +80,11 @@
       const safeText = String(text || "HOUSEMYCPROPIEDADES").slice(0, 38);
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
-          <rect width="800" height="450" fill="#1e293b"/>
-          <rect x="28" y="28" width="744" height="394" rx="18" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="8 8"/>
-          <text x="400" y="195" fill="#f59e0b" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle">HOUSEMYCPROPIEDADES</text>
-          <text x="400" y="235" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">${safeText}</text>
-          <text x="400" y="272" fill="#94a3b8" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Vista previa de respaldo sin conexión o enlace externo</text>
+          <rect width="800" height="450" fill="#09090b"/>
+          <rect x="28" y="28" width="744" height="394" rx="18" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="8 8"/>
+          <text x="400" y="195" fill="#fbbf24" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle">HOUSEMYCPROPIEDADES</text>
+          <text x="400" y="235" fill="#fef3c7" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">${safeText}</text>
+          <text x="400" y="272" fill="#d97706" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Vista previa de respaldo sin conexión o enlace externo</text>
         </svg>
       `.trim();
       return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -216,7 +216,7 @@
 
       if (filtered.length === 0) {
         catalogGrid.innerHTML = `
-          <div class="col-span-full bg-white rounded-xl border border-slate-200 p-8 text-center text-slate-500">
+          <div class="col-span-full bg-amber-950/30 rounded-xl border border-amber-500/50 p-8 text-center text-amber-200">
             No se encontraron propiedades con esos filtros.
           </div>
         `;
@@ -227,37 +227,37 @@
         .map((p) => {
           const cover = getCoverImage(p);
           const badgeText = p.operation === "sale" ? "Venta" : "Arriendo";
-          const badgeColor = p.operation === "sale" ? "bg-emerald-600" : "bg-sky-600";
+          const badgeColor = p.operation === "sale" ? "bg-amber-500 text-zinc-950" : "bg-amber-700 text-amber-50";
           const fallbackLabel = `${p.title} · ${cover.label}`;
 
           return `
-            <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-              <div class="relative h-48 bg-slate-200">
+            <article class="bg-gradient-to-b from-amber-950/30 to-zinc-900 rounded-xl shadow-md shadow-amber-950/20 border border-amber-500/55 overflow-hidden flex flex-col">
+              <div class="relative h-48 bg-zinc-900 border-b border-amber-500/30">
                 <img
                   src="${cover.url}"
                   alt="${p.title}"
                   onerror="handleImageError(this, '${fallbackLabel.replace(/'/g, "\\'")}')"
                   class="w-full h-full object-cover"
                 />
-                <span class="absolute top-3 left-3 ${badgeColor} text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                <span class="absolute top-3 left-3 ${badgeColor} text-xs font-bold px-2.5 py-1 rounded-full">
                   ${badgeText}
                 </span>
-                <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full">
+                <span class="absolute bottom-3 right-3 bg-zinc-950/90 border border-amber-500/40 text-amber-300 text-xs px-2.5 py-1 rounded-full">
                   ${p.images.length} ${p.images.length === 1 ? "foto" : "fotos"}
                 </span>
               </div>
 
               <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <p class="text-xs text-slate-500 font-medium">${p.commune}</p>
-                  <h3 class="text-base font-bold text-slate-900 mt-0.5">${p.title}</h3>
-                  <p class="text-lg font-extrabold text-slate-900 mt-2">${p.price}</p>
-                  <p class="text-xs text-slate-600 mt-1">${p.area}</p>
+                  <p class="text-xs text-amber-300/80 font-medium">${p.commune}</p>
+                  <h3 class="text-base font-bold text-amber-100 mt-0.5">${p.title}</h3>
+                  <p class="text-lg font-extrabold text-amber-400 mt-2">${p.price}</p>
+                  <p class="text-xs text-amber-200/75 mt-1">${p.area}</p>
                 </div>
 
                 <button
                   onclick="openPropertyModal(${p.id})"
-                  class="w-full py-2 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition cursor-pointer"
+                  class="w-full py-2 px-4 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold transition cursor-pointer"
                 >
                   Ver ficha y fotos
                 </button>
@@ -278,42 +278,42 @@
       modalBody.innerHTML = `
         <div class="space-y-2">
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full font-medium">${property.commune}</span>
-            <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full font-medium">${property.area}</span>
-            <span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-semibold">${property.status}</span>
+            <span class="bg-amber-950/60 border border-amber-500/40 text-amber-200 px-2.5 py-1 rounded-full font-medium">${property.commune}</span>
+            <span class="bg-amber-950/60 border border-amber-500/40 text-amber-200 px-2.5 py-1 rounded-full font-medium">${property.area}</span>
+            <span class="bg-amber-500 text-zinc-950 px-2.5 py-1 rounded-full font-bold">${property.status}</span>
           </div>
-          <p class="text-xl font-extrabold text-slate-900">${property.price}</p>
-          <p class="text-sm text-slate-600 leading-relaxed">${property.description}</p>
+          <p class="text-xl font-extrabold text-amber-400">${property.price}</p>
+          <p class="text-sm text-amber-100/85 leading-relaxed">${property.description}</p>
         </div>
 
-        <div class="border-t border-slate-200 pt-4 space-y-3">
+        <div class="border-t border-amber-500/30 pt-4 space-y-3">
           <div class="flex items-center justify-between">
-            <h4 class="text-sm font-bold text-slate-800">Galería de la propiedad (ID: ${property.id})</h4>
-            <span class="text-xs text-slate-500">Elige cuál foto es portada</span>
+            <h4 class="text-sm font-bold text-amber-300">Galería de la propiedad (ID: ${property.id})</h4>
+            <span class="text-xs text-amber-200/70">Elige cuál foto es portada</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             ${property.images
               .map(
                 (img) => `
-              <div class="border rounded-xl overflow-hidden ${img.isCover ? "border-amber-500 ring-2 ring-amber-200" : "border-slate-200"}">
+              <div class="border rounded-xl overflow-hidden bg-zinc-900 ${img.isCover ? "border-amber-400 ring-2 ring-amber-400/40" : "border-amber-500/35"}">
                 <img
                   src="${img.url}"
                   alt="${img.label}"
                   onerror="handleImageError(this, '${img.label.replace(/'/g, "\\'")}')"
                   class="w-full h-40 object-cover"
                 />
-                <div class="p-3 flex items-center justify-between gap-2 bg-slate-50">
+                <div class="p-3 flex items-center justify-between gap-2 bg-amber-950/35">
                   <div>
-                    <p class="text-xs font-semibold text-slate-800">${img.label}</p>
-                    <p class="text-[11px] text-slate-500">${img.isCover ? "Portada actual" : "Galería"}</p>
+                    <p class="text-xs font-semibold text-amber-100">${img.label}</p>
+                    <p class="text-[11px] text-amber-300/75">${img.isCover ? "Portada actual" : "Galería"}</p>
                   </div>
                   ${
                     img.isCover
-                      ? `<span class="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded">Portada</span>`
+                      ? `<span class="text-xs font-bold text-zinc-950 bg-amber-400 px-2 py-1 rounded">Portada</span>`
                       : `<button
                           onclick="setCoverImage(${property.id}, '${img.id}')"
-                          class="text-xs bg-slate-900 hover:bg-slate-800 text-white px-2.5 py-1.5 rounded font-medium cursor-pointer"
+                          class="text-xs bg-amber-500 hover:bg-amber-400 text-zinc-950 px-2.5 py-1.5 rounded font-bold cursor-pointer"
                         >
                           Hacer portada
                         </button>`
@@ -326,26 +326,26 @@
           </div>
         </div>
 
-        <form onsubmit="addImageToProperty(event, ${property.id})" class="border-t border-slate-200 pt-4 space-y-3">
-          <h4 class="text-sm font-bold text-slate-800">Agregar foto a esta propiedad (prueba local)</h4>
+        <form onsubmit="addImageToProperty(event, ${property.id})" class="border-t border-amber-500/30 pt-4 space-y-3">
+          <h4 class="text-sm font-bold text-amber-300">Agregar foto a esta propiedad (prueba local)</h4>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <input
               id="newImgUrl"
               type="url"
               required
               placeholder="https://...jpg o .webp"
-              class="sm:col-span-2 rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              class="sm:col-span-2 rounded-lg border border-amber-500/60 bg-zinc-900 text-amber-100 placeholder-amber-200/40 px-3 py-2 text-sm"
             />
             <input
               id="newImgLabel"
               type="text"
               placeholder="Etiqueta (ej. Cocina)"
-              class="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              class="rounded-lg border border-amber-500/60 bg-zinc-900 text-amber-100 placeholder-amber-200/40 px-3 py-2 text-sm"
             />
           </div>
           <button
             type="submit"
-            class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer"
+            class="bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-bold px-4 py-2 rounded-lg cursor-pointer"
           >
             Añadir a la galería
           </button>
