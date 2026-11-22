@@ -7,7 +7,13 @@ Portal inmobiliario autogestionable para **HOUSEMYCPROPIEDADES**, orientado a pu
 - **Catálogo público de propiedades:** listado con filtros por operación (venta/arriendo), tipo de inmueble, ubicación y rango de precio.
 - **Ficha detallada por propiedad:** descripción, superficie, características clave, ubicación y galería de fotos.
 - **Panel autogestionable:** creación, edición, cambio de estado (disponible, reservada, vendida/arrendada) y eliminación de propiedades.
-- **Gestión de imágenes por propiedad:** carga múltiple, definición de portada, reordenamiento y borrado seguro vinculado al ID de cada propiedad.
+- **Gestión de imágenes por propiedad:** carga múltiple, definición de imagen de portada, reordenamiento y eliminación vinculada a cada propiedad.
+
+## Gestión de imágenes por propiedad
+
+- **Organización por ID:** cada propiedad mantiene su propio conjunto de fotos (`properties/{property_id}/cover.jpg`, `gallery_1.jpg`, etc.).
+- **Imagen principal (portada):** define qué foto se muestra primero en el catálogo y tarjetas de búsqueda.
+- **Galería y orden:** permite agregar nuevas imágenes, cambiar su orden de aparición y quitar fotos obsoletas sin afectar otras fichas.
 
 ## Arquitectura base propuesta
 
