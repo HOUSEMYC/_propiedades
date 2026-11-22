@@ -29,7 +29,7 @@ _propiedades/
 ├── frontend/
 ├── backend/
 └── docs/
-´´´
+```
 ## Estado actual
 
 - Repositorio inicializado (`Initial commit` en `HOUSEMYC/_propiedades`).
