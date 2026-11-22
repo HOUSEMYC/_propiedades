@@ -77,6 +77,26 @@
   </div>
 
   <script>
+    function createFallbackImage(text) {
+      const safeText = String(text || "HOUSEMYCPROPIEDADES").slice(0, 38);
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+          <rect width="800" height="450" fill="#1e293b"/>
+          <rect x="28" y="28" width="744" height="394" rx="18" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="8 8"/>
+          <text x="400" y="195" fill="#f59e0b" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle">HOUSEMYCPROPIEDADES</text>
+          <text x="400" y="235" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">${safeText}</text>
+          <text x="400" y="272" fill="#94a3b8" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Vista previa de respaldo sin conexión o enlace externo</text>
+        </svg>
+      `.trim();
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function handleImageError(imgEl, labelText) {
+      if (imgEl.dataset.fallbackApplied === "true") return;
+      imgEl.dataset.fallbackApplied = "true";
+      imgEl.src = createFallbackImage(labelText);
+    }
+
     let properties = [
       {
         id: 1,
@@ -209,11 +229,17 @@
           const cover = getCoverImage(p);
           const badgeText = p.operation === "sale" ? "Venta" : "Arriendo";
           const badgeColor = p.operation === "sale" ? "bg-emerald-600" : "bg-sky-600";
+          const fallbackLabel = `${p.title} · ${cover.label}`;
 
           return `
             <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
               <div class="relative h-48 bg-slate-200">
-                <img src="${cover.url}" alt="${p.title}" class="w-full h-full object-cover" />
+                <img
+                  src="${cover.url}"
+                  alt="${p.title}"
+                  onerror="handleImageError(this, '${fallbackLabel.replace(/'/g, "\\'")}')"
+                  class="w-full h-full object-cover"
+                />
                 <span class="absolute top-3 left-3 ${badgeColor} text-white text-xs font-semibold px-2.5 py-1 rounded-full">
                   ${badgeText}
                 </span>
@@ -272,7 +298,12 @@
               .map(
                 (img) => `
               <div class="border rounded-xl overflow-hidden ${img.isCover ? "border-amber-500 ring-2 ring-amber-200" : "border-slate-200"}">
-                <img src="${img.url}" alt="${img.label}" class="w-full h-40 object-cover" />
+                <img
+                  src="${img.url}"
+                  alt="${img.label}"
+                  onerror="handleImageError(this, '${img.label.replace(/'/g, "\\'")}')"
+                  class="w-full h-40 object-cover"
+                />
                 <div class="p-3 flex items-center justify-between gap-2 bg-slate-50">
                   <div>
                     <p class="text-xs font-semibold text-slate-800">${img.label}</p>
