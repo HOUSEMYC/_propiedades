@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -354,13 +354,58 @@
 
       detailModal.classList.remove("hidden");
       detailModal.classList.add("flex");
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=./frontend/" />
-  <title>HOUSEMYCPROPIEDADES</title>
-</head>
-<body>
-  <p>Cargando <a href="./frontend/">HOUSEMYCPROPIEDADES</a>...</p>
+    }
+
+    function setCoverImage(propertyId, imageId) {
+      const property = properties.find((p) => p.id === propertyId);
+      if (!property) return;
+
+      property.images = property.images.map((img) => ({
+        ...img,
+        isCover: img.id === imageId
+      }));
+
+      renderCatalog();
+      openPropertyModal(propertyId);
+    }
+
+    function addImageToProperty(event, propertyId) {
+      event.preventDefault();
+      const urlInput = document.getElementById("newImgUrl");
+      const labelInput = document.getElementById("newImgLabel");
+      const property = properties.find((p) => p.id === propertyId);
+      if (!property || !urlInput.value.trim()) return;
+
+      property.images.push({
+        id: `img-${Date.now()}`,
+        url: urlInput.value.trim(),
+        label: labelInput.value.trim() || `Foto ${property.images.length + 1}`,
+        isCover: false
+      });
+
+      renderCatalog();
+      openPropertyModal(propertyId);
+    }
+
+    function closePropertyModal() {
+      detailModal.classList.add("hidden");
+      detailModal.classList.remove("flex");
+      activePropertyId = null;
+    }
+
+    filterOperation.addEventListener("change", renderCatalog);
+    filterType.addEventListener("change", renderCatalog);
+    filterSearch.addEventListener("input", renderCatalog);
+    closeModalBtn.addEventListener("click", closePropertyModal);
+    detailModal.addEventListener("click", (e) => {
+      if (e.target === detailModal) closePropertyModal();
+    });
+
+    renderCatalog();
+  </script>
 </body>
 </html>
+ 
+ 
+  
+     
