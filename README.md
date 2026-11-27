@@ -382,7 +382,7 @@
 
     function getWhatsAppUrl(property) {
       const operacionLabel = property.operation === "sale" ? "Venta" : "Arriendo";
-      const text = `Hola HOUSEMYCPROPIEDADES, me interesa consultar por la propiedad "${property.title}" (${property.code} · ${operacionLabel} · ${property.price}) ubicada en ${property.commune}.`;
+      const text = `Hola HOUSEMYCPROPIEDADES, me interesa consultar por la propiedad "${property.title}" (${property.code} ·${operacionLabel} · ${property.price}) ubicada en${property.commune}.`;
       return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
     }
 
@@ -426,7 +426,7 @@
         });
       }
 
-      propertyCount.textContent = `${filtered.length} ${filtered.length === 1 ? "propiedad" : "propiedades"}`;
+      propertyCount.textContent = `${filtered.length}${filtered.length === 1 ? "propiedad" : "propiedades"}`;
 
       if (filtered.length === 0) {
         catalogGrid.innerHTML = `
@@ -452,7 +452,7 @@
           const badgeClasses = isSale
             ? "bg-amber-400 text-zinc-950"
             : "bg-zinc-950/90 text-amber-300 border border-amber-400/60";
-          const fallbackLabel = escapeAttr(`${p.title} · ${cover.label}`);
+          const fallbackLabel = escapeAttr(`${p.title} ·${cover.label}`);
           const waLink = escapeAttr(getWhatsAppUrl(p));
 
           return `
@@ -473,7 +473,7 @@
                   ${escapeAttr(p.code)}
                 </span>
                 <span class="absolute bottom-3 right-3 bg-zinc-950/90 border border-amber-500/40 text-amber-300 text-xs font-medium px-2.5 py-1 rounded-full">
-                  ${p.images.length} ${p.images.length === 1 ? "foto" : "fotos"}
+                  ${p.images.length}${p.images.length === 1 ? "foto" : "fotos"}
                 </span>
               </div>
 
@@ -538,7 +538,7 @@
 
       const cover = getCoverImage(property);
       const waLink = escapeAttr(getWhatsAppUrl(property));
-      modalSubtitle.textContent = `${property.code} · ${property.commune}`;
+      modalSubtitle.textContent = `${property.code} ·${property.commune}`;
       modalTitle.textContent = property.title;
 
       modalBody.innerHTML = `
@@ -560,184 +560,4 @@
 
           <div class="lg:col-span-5 bg-zinc-900/90 border border-amber-500/35 rounded-xl p-4 space-y-3">
             <div class="flex flex-wrap gap-2 text-xs">
-              <span class="bg-amber-400 text-zinc-950 px-2.5 py-1 rounded-full font-extrabold">
-                ${property.operation === "sale" ? "En Venta" : "En Arriendo"}
-              </span>
-              <span class="bg-zinc-950 border border-amber-500/35 text-amber-200 px-2.5 py-1 rounded-full font-medium">
-                ${escapeAttr(property.status)}
-              </span>
-            </div>
-
-            <p class="text-2xl font-extrabold text-amber-400">${escapeAttr(property.price)}</p>
-
-            <div class="text-xs text-zinc-300 space-y-1.5 border-y border-amber-500/20 py-3">
-              <p><span class="text-amber-300 font-semibold">Superficie:</span> ${escapeAttr(property.area)}</p>
-              <p><span class="text-amber-300 font-semibold">Ficha técnica:</span> ${escapeAttr(property.bedrooms)} · ${escapeAttr(property.bathrooms)}</p>
-              <p><span class="text-amber-300 font-semibold">Ubicación:</span> ${escapeAttr(property.commune)}</p>
-              ${
-                property.surroundings
-                  ? `<p><span class="text-amber-300 font-semibold">Cercanía:</span> ${escapeAttr(property.surroundings)}</p>`
-                  : ""
-              }
-            </div>
-
-            <p class="text-sm text-zinc-300 leading-relaxed">${escapeAttr(property.description)}</p>
-
-            <a
-              href="${waLink}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-2 block w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-extrabold text-center transition"
-            >
-              Consultar por WhatsApp
-            </a>
-          </div>
-        </div>
-
-        <div class="border-t border-amber-500/30 pt-5 space-y-3">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-            <h4 class="text-sm font-bold text-amber-300">
-              Galería de imágenes (${property.images.length})
-            </h4>
-            <span class="text-xs text-zinc-400">
-              Haz clic en una foto para previsualizarla o definirla como portada
-            </span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            ${property.images
-              .map(
-                (img) => `
-              <div class="border rounded-xl overflow-hidden bg-zinc-900 flex flex-col justify-between ${
-                img.isCover ? "border-amber-400 ring-2 ring-amber-400/35" : "border-amber-500/30"
-              }">
-                <button
-                  type="button"
-                  onclick="previewModalImage('${escapeAttr(img.url)}', '${escapeAttr(img.label)}')"
-                  class="block w-full h-36 bg-zinc-950 overflow-hidden text-left cursor-pointer"
-                >
-                  <img
-                    src="${escapeAttr(img.url)}"
-                    alt="${escapeAttr(img.label)}"
-                    onerror="handleImageError(this, '${escapeAttr(img.label)}')"
-                    class="w-full h-full object-cover hover:scale-105 transition"
-                  />
-                </button>
-                <div class="p-3 flex items-center justify-between gap-2 bg-zinc-950/70">
-                  <div class="min-w-0">
-                    <p class="text-xs font-semibold text-amber-100 truncate">${escapeAttr(img.label)}</p>
-                    <p class="text-[11px] text-amber-300/75">${img.isCover ? "Portada actual" : "Galería"}</p>
-                  </div>
-                  ${
-                    img.isCover
-                      ? `<span class="shrink-0 text-[11px] font-extrabold text-zinc-950 bg-amber-400 px-2.5 py-1 rounded-md">Portada</span>`
-                      : `<button
-                          type="button"
-                          onclick="setCoverImage(${property.id}, '${escapeAttr(img.id)}')"
-                          class="shrink-0 text-[11px] bg-amber-500 hover:bg-amber-400 text-zinc-950 px-2.5 py-1.5 rounded-md font-bold transition cursor-pointer"
-                        >
-                          Usar portada
-                        </button>`
-                  }
-                </div>
-              </div>
-            `
-              )
-              .join("")}
-          </div>
-        </div>
-
-        <form onsubmit="addImageToProperty(event, ${property.id})" class="border-t border-amber-500/30 pt-5 space-y-3">
-          <h4 class="text-sm font-bold text-amber-300">Agregar nueva foto a esta ficha (guardado en navegador)</h4>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            <input
-              id="newImgUrl"
-              type="url"
-              required
-              placeholder="https://...jpg o .webp"
-              class="sm:col-span-2 rounded-xl border border-amber-500/45 bg-zinc-900 text-amber-100 placeholder-zinc-500 px-3.5 py-2 text-sm focus:outline-none focus:border-amber-400"
-            />
-            <input
-              id="newImgLabel"
-              type="text"
-              placeholder="Etiqueta (ej. Cocina, Terraza)"
-              class="rounded-xl border border-amber-500/45 bg-zinc-900 text-amber-100 placeholder-zinc-500 px-3.5 py-2 text-sm focus:outline-none focus:border-amber-400"
-            />
-          </div>
-          <button
-            type="submit"
-            class="bg-amber-500 hover:bg-amber-400 text-zinc-950 text-sm font-extrabold px-4 py-2 rounded-xl transition cursor-pointer"
-          >
-            Añadir a la galería
-          </button>
-        </form>
-      `;
-
-      detailModal.classList.remove("hidden");
-      detailModal.classList.add("flex");
-    }
-
-    function previewModalImage(url, label) {
-      const mainImg = document.getElementById("modalMainPreview");
-      const caption = document.getElementById("modalPreviewCaption");
-      if (!mainImg || !caption) return;
-      mainImg.dataset.fallbackApplied = "false";
-      mainImg.src = url;
-      caption.textContent = `Vista seleccionada: ${label}`;
-    }
-
-    function setCoverImage(propertyId, imageId) {
-      const property = properties.find((p) => p.id === propertyId);
-      if (!property) return;
-
-      property.images = property.images.map((img) => ({
-        ...img,
-        isCover: img.id === imageId
-      }));
-
-      saveProperties();
-      renderCatalog();
-      openPropertyModal(propertyId);
-    }
-
-    function addImageToProperty(event, propertyId) {
-      event.preventDefault();
-      const urlInput = document.getElementById("newImgUrl");
-      const labelInput = document.getElementById("newImgLabel");
-      const property = properties.find((p) => p.id === propertyId);
-      if (!property || !urlInput.value.trim()) return;
-
-      property.images.push({
-        id: `img-${Date.now()}`,
-        url: urlInput.value.trim(),
-        label: labelInput.value.trim() || `Foto ${property.images.length + 1}`,
-        isCover: false
-      });
-
-      saveProperties();
-      renderCatalog();
-      openPropertyModal(propertyId);
-    }
-
-    function closePropertyModal() {
-      detailModal.classList.add("hidden");
-      detailModal.classList.remove("flex");
-      activePropertyId = null;
-    }
-
-    filterOperation.addEventListener("change", renderCatalog);
-    filterType.addEventListener("change", renderCatalog);
-    filterSearch.addEventListener("input", renderCatalog);
-    filterSort.addEventListener("change", renderCatalog);
-    closeModalBtn.addEventListener("click", closePropertyModal);
-    detailModal.addEventListener("click", (e) => {
-      if (e.target === detailModal) closePropertyModal();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && activePropertyId !== null) closePropertyModal();
-    });
-
-    renderCatalog();
-  </script>
-</body>
-</html>
+              <span class="bg-amber-400 text-zinc-950 px-2.5 py-1 rounded-full
