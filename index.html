@@ -95,7 +95,7 @@
             <input
               id="filterSearch"
               type="text"
-              placeholder="Ej. Rudecindo Ortega, Av. Alemania, Pueblo Nuevo..."
+              placeholder="Ej. Rudecindo Ortega, Mall, UCN, Calle Ecuador..."
               class="w-full rounded-xl border border-amber-500/45 px-3.5 py-2.5 text-sm bg-zinc-950 text-amber-100 placeholder-zinc-500 focus:outline-none focus:border-amber-400"
             />
           </div>
@@ -176,9 +176,8 @@
   </div>
 
   <script>
-    // Reemplaza este número con el WhatsApp de contacto de HOUSEMYCPROPIEDADES (incluyendo código país, sin + ni espacios)
     const WHATSAPP_NUMBER = "56900000000";
-    const STORAGE_KEY = "housemyc_propiedades_catalog_v1";
+    const STORAGE_KEY = "housemyc_propiedades_catalog_v2";
 
     const DEFAULT_PROPERTIES = [
       {
@@ -187,20 +186,21 @@
         title: "Departamento Rudecindo Ortega Temuco",
         operation: "sale",
         type: "apartment",
-        commune: "Temuco · Rudecindo Ortega",
-        price: "$138.000.000 CLP",
-        numericPrice: 138000000,
-        area: "58 m² útiles",
-        bedrooms: "2 dorm.",
-        bathrooms: "2 baños",
+        commune: "Temuco · Rudecindo Ortega (Condominio Mirador Ñielol)",
+        price: "$89.000.000 CLP",
+        numericPrice: 89000000,
+        area: "58 m²",
+        bedrooms: "3 dorm.",
+        bathrooms: "1 baño",
         status: "Disponible",
+        surroundings: "Cercano a supermercado, mall y sede Universidad Católica del Norte (UCN)",
         description:
-          "Departamento en condominio del sector Rudecindo Ortega, Temuco, con acceso controlado, estacionamiento y buena conectividad hacia el centro y sectores norte/poniente.",
+          "Departamento de 58 m² en Condominio Mirador Ñielol, sector Rudecindo Ortega, Temuco. Cuenta con 3 dormitorios, 1 baño, cocina amueblada, logia independiente y estacionamiento, con áreas comunes que incluyen piscina, juegos infantiles y vigilancia 24/7. Entorno con rápida cercanía a supermercado, mall y sede de la Universidad Católica del Norte.",
         images: [
           {
             id: "img-101",
             url: "./images/departamento-rudecindo-ortega-portada.jpg",
-            label: "Acceso y torres del condominio",
+            label: "Acceso y torres Condominio Mirador Ñielol",
             isCover: true
           },
           {
@@ -230,6 +230,7 @@
         bedrooms: "2 dorm.",
         bathrooms: "2 baños",
         status: "Disponible",
+        surroundings: "Próximo a comercio, servicios, clínicas y centros de estudio",
         description:
           "Departamento funcional y luminoso próximo a Av. Alemania, con cercanía a servicios, comercio, clínicas y centros de estudio.",
         images: [
@@ -250,23 +251,24 @@
       {
         id: 3,
         code: "HM-103",
-        title: "Paño / Terreno Urbano con Potencial Comercial",
+        title: "Paño Inmobiliario Calle Ecuador · Pueblo Nuevo",
         operation: "sale",
         type: "parcel",
-        commune: "Temuco · Pueblo Nuevo",
-        price: "Consultar valor",
+        commune: "Temuco · Calle Ecuador, Pueblo Nuevo",
+        price: "15 UF/m²",
         numericPrice: 999999999999,
-        area: "2.500 m² totales",
-        bedrooms: "Uso mixto",
-        bathrooms: "Acceso directo",
+        area: "2.500 m² (5 lotes)",
+        bedrooms: "Zona ZHR5 · 21m",
+        bathrooms: "Hasta 8.125 m² const.",
         status: "Disponible",
+        surroundings: "Sector urbano con conectividad a ejes principales y servicios de Pueblo Nuevo",
         description:
-          "Superficie urbana en sector Pueblo Nuevo con proyección para desarrollo inmobiliario, equipamiento o proyecto comercial según normativa local.",
+          "Paño inmobiliario de 2.500 m² conformado por 5 lotes colindantes en calle Ecuador, Temuco, valor oferta 15 UF/m². Normativa Zona ZHR5: altura máxima 21 m, constructibilidad base 2,5 y 3,25 con fusión predial (hasta 8.125 m² construibles; incidencia estimada 4,62 UF/m² construible).",
         images: [
           {
             id: "img-301",
             url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80",
-            label: "Vista general del terreno",
+            label: "Vista general del paño",
             isCover: true
           },
           {
@@ -296,9 +298,7 @@
     function saveProperties() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(properties));
-      } catch (err) {
-        // Si el navegador bloquea localStorage, continúa funcionando en memoria
-      }
+      } catch (err) {}
     }
 
     function resetStoredProperties() {
@@ -387,6 +387,7 @@
           p.title.toLowerCase().includes(query) ||
           p.commune.toLowerCase().includes(query) ||
           p.code.toLowerCase().includes(query) ||
+          (p.surroundings && p.surroundings.toLowerCase().includes(query)) ||
           p.description.toLowerCase().includes(query);
         return matchOp && matchType && matchText;
       });
@@ -463,6 +464,11 @@
                   <p class="text-xl font-extrabold text-amber-400 pt-1">
                     ${escapeAttr(p.price)}
                   </p>
+                  ${
+                    p.surroundings
+                      ? `<p class="text-xs text-amber-200/85 leading-snug">${escapeAttr(p.surroundings)}</p>`
+                      : ""
+                  }
 
                   <div class="grid grid-cols-3 gap-2 pt-2 text-center">
                     <div class="bg-zinc-950/80 border border-amber-500/20 rounded-lg py-1.5 px-2">
@@ -542,8 +548,13 @@
 
             <div class="text-xs text-zinc-300 space-y-1.5 border-y border-amber-500/20 py-3">
               <p><span class="text-amber-300 font-semibold">Superficie:</span> ${escapeAttr(property.area)}</p>
-              <p><span class="text-amber-300 font-semibold">Distribución:</span> ${escapeAttr(property.bedrooms)} · ${escapeAttr(property.bathrooms)}</p>
+              <p><span class="text-amber-300 font-semibold">Ficha técnica:</span> ${escapeAttr(property.bedrooms)} · ${escapeAttr(property.bathrooms)}</p>
               <p><span class="text-amber-300 font-semibold">Ubicación:</span> ${escapeAttr(property.commune)}</p>
+              ${
+                property.surroundings
+                  ? `<p><span class="text-amber-300 font-semibold">Cercanía:</span> ${escapeAttr(property.surroundings)}</p>`
+                  : ""
+              }
             </div>
 
             <p class="text-sm text-zinc-300 leading-relaxed">${escapeAttr(property.description)}</p>
